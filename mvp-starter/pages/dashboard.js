@@ -23,6 +23,7 @@
  import NavBar from '../components/navbar';
  import ReceiptRow from '../components/receiptRow';
  import ExpenseDialog from '../components/expenseDialog';
+ import BasicTabs from '../components/basicTabs';
  import { useAuth } from '../firebase/auth';
  import { deleteReceipt, getReceipts } from '../firebase/firestore';
  import { deleteImage } from '../firebase/storage';
@@ -126,35 +127,8 @@ export default function Dashboard() {
                   anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>
           <Alert onClose={() => setErrorSnackbar(false)} severity="error">{snackbarMessage}</Alert>
         </Snackbar>
-        <Stack direction="row" sx={{ paddingTop: "1.5em" }}>
-          <Typography variant="h4" sx={{ lineHeight: 2, paddingRight: "0.5em" }}>
-            EXPENSES
-          </Typography>
-          <IconButton aria-label="edit" color="secondary" onClick={onClickAdd} className={styles.addButton}>
-            <AddIcon />
-          </IconButton>
-        </Stack>
+        <BasicTabs />
       </Container>
-      <ExpenseDialog edit={updateReceipt}
-                     showDialog={action === RECEIPTS_ENUM.add || action === RECEIPTS_ENUM.edit}
-                     onError={(receiptEnum) => onResult(receiptEnum, false)}
-                     onSuccess={(receiptEnum) => onResult(receiptEnum, true)}
-                     onCloseDialog={() => setAction(RECEIPTS_ENUM.none)}>
-      </ExpenseDialog>
-      <Dialog open={action === RECEIPTS_ENUM.delete} onClose={resetDelete}>
-        <Typography variant="h4" className={styles.title}>DELETE EXPENSE</Typography>
-        <DialogContent>
-            <Alert severity="error">This will permanently delete your receipt!</Alert>
-        </DialogContent>
-        <DialogActions sx={{ padding: '0 24px 24px'}}>
-          <Button color="secondary" variant="outlined" onClick={resetDelete}>
-              Cancel
-          </Button>
-          <Button color="secondary" variant="contained" autoFocus>
-              Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   )
 }
