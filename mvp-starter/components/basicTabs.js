@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Quiz from './quiz';
-import { jsQuiz } from '../components/quiz';
+import { swiftieQuiz } from '../constants/constants.js';
 
 
 function CustomTabPanel(props) {
@@ -19,9 +19,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
+        <Box sx={{ p: 3 }}>{children}</Box>
       )}
     </div>
   );
@@ -50,7 +48,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        < Quiz questions = { jsQuiz.questions }/>
+        < Quiz questions = { swiftieQuiz.questions }/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
