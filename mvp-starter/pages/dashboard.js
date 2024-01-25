@@ -114,7 +114,7 @@ export default function Dashboard() {
     </CircularProgress> :
     <div>
       <Head>
-        <title>Expense Tracker</title>
+        <title>WHO IS YOUR MOTHER?</title>
       </Head>
 
       <NavBar />
