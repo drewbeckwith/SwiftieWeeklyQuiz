@@ -17,6 +17,7 @@ $foreground: #2d264b;
 }
 
 .quiz-container {
+    position:relative;
     width: 500px;
     background: $bg;
     border-radius: 4px;
@@ -112,4 +113,19 @@ $foreground: #2d264b;
             }
     }
 
+}
+
+.answer-timer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid $disabled;
+    
+    .progress {
+        height: 5px;
+        transition-duration: 1s;
+        width: 0;
+        transition-timing-function: linear;
+    }   
 }

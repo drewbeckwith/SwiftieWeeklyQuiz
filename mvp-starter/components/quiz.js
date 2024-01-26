@@ -1,6 +1,7 @@
 //TO DO 35:25 in https://www.youtube.com/watch?v=UX5HIrxbRUc
 import { useState } from 'react';
 import { resultInitialState } from '../constants/constants.js'; //resultInitialState from '../constants/constants.js'
+import AnswerTimer from './AnswerTimer.jsx';
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answerIdx, setAnswerIdx]= useState(null);
@@ -51,6 +52,7 @@ const Quiz = ({ questions }) => {
         <div className="quiz-outer">
             <div className="quiz-container">
                 {!showResult ? (<>
+                    <AnswerTimer/>
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
                     <h2>{question}</h2>
