@@ -16,11 +16,12 @@
  */
 
 import '../styles/global.scss'
+import '../styles/index.scss';
 import '../styles/firebaseui-styling.global.scss';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../styles/theme.js';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AuthUserProvider } from '../firebase/auth.js';
 
 export default function App({ Component, pageProps }) {

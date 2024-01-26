@@ -52,7 +52,7 @@ export default function Home() {
   </CircularProgress> :
     <div>
       <Head>
-        <title>Expense Tracker</title>
+        <title>WHO IS YOUR MOTHER?</title>
       </Head>
 
       <main>
