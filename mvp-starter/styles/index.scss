@@ -115,6 +115,18 @@ $foreground: #2d264b;
 
 }
 
+.start-quiz-container {
+
+    height: 8vh;
+
+    .start-quiz {
+        position: absolute;
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+    }
+
+}
 .answer-timer-container {
     position: absolute;
     top: 0;
@@ -124,8 +136,9 @@ $foreground: #2d264b;
     
     .progress {
         height: 5px;
-        transition-duration: 1s;
+        transition-duration: .1s;
         width: 0;
         transition-timing-function: linear;
-    }   
+        background-color: red;
+    }
 }
