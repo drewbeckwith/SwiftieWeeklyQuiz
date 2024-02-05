@@ -142,3 +142,30 @@ $foreground: #2d264b;
         background-color: red;
     }
 }
+
+:root{
+    --color-dark: #2C3131;
+    --color-light: #F3F3F2;
+}
+
+.board {
+    text-align: center;
+}
+
+.board .leaderboard {
+    margin-bottom: 1em;
+}
+
+.board .duration {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+#profile .flex .info {
+    padding: 1em;
+}
+
+.text-dark {
+    color: var(--color-dark)
+}

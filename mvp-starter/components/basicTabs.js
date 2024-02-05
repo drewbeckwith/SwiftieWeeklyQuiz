@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Quiz from './quiz';
 import { swiftieQuiz } from '../constants/constants.js';
+import Leaderboard from './leaderboard.js';
 
 
 function CustomTabPanel(props) {
@@ -51,7 +52,7 @@ export default function BasicTabs() {
         < Quiz questions = { swiftieQuiz.questions }/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        < Leaderboard />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Item Three
