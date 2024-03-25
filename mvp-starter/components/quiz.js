@@ -1,7 +1,11 @@
 //TO DO  1:18 in https://www.youtube.com/watch?v=UX5HIrxbRUc
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { resultInitialState } from '../constants/constants.js'; //resultInitialState from '../constants/constants.js'
 import AnswerTimer from './AnswerTimer.jsx';
+import { app, db } from '../firebase/firebase.js';
+import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
+import { useAuth } from '../firebase/auth';
+
 const Quiz = ({ questions }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answerIdx, setAnswerIdx]= useState(null);
@@ -10,6 +14,7 @@ const Quiz = ({ questions }) => {
     const [showResult, setShowResult]= useState(0);
     const [showStart, setShowStart]= useState(true);
     const [showAnswerTimer, setShowAnswerTimer]= useState(true);
+    const { authUser, signOut } = useAuth();
 
     const { question, choices, correctAnswer } = questions[currentQuestion];
 
@@ -22,6 +27,16 @@ const Quiz = ({ questions }) => {
             setAnswer(false)
         }
     } 
+
+    useEffect(() => {
+        if (showResult) {
+            const docRef = doc(db, 'users', authUser.email);
+            const docSnap = getDoc(docRef).then((snapshot) => {
+              const currScore = snapshot.data().totalScore;
+              updateDoc(docRef, { totalScore: currScore + result.score });
+            });
+        }
+      }, [showResult]);
 
     const onClickNext = (finalAnswer) => {
         setShowAnswerTimer(false);
@@ -44,6 +59,7 @@ const Quiz = ({ questions }) => {
         else {
             setCurrentQuestion(0);
             setShowResult(true);
+            console.log(result)
         }
         setTimeout(() => {
             setShowAnswerTimer(true);
@@ -92,6 +108,7 @@ const Quiz = ({ questions }) => {
                         <h3>Result</h3>
                         <p>
                             Total Questions : {questions.length}
+                         
                         </p>
                         <p>
                             Total Score : {result.score}
@@ -103,7 +120,10 @@ const Quiz = ({ questions }) => {
                             Wrong Answers : {result.wrongAnswer}
                         </p>
                         <button onClick = {onTryAgain}>Try Again</button>
-                    </div>                    
+                        {
+                            console.log(result)
+                        }  
+                    </div>             
                     }
                 
             </div>

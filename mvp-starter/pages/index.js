@@ -22,6 +22,9 @@ import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Button, CircularProgress, Container, Dialog, Typography } from '@mui/material';
 import { auth } from '../firebase/firebase';
+import { db } from '../firebase/firebase';
+import { doc, updateDoc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, getDoc } from 'firebase/firestore';
 import { useAuth } from '../firebase/auth';
 import styles from '../styles/landing.module.scss';
 
@@ -42,11 +45,21 @@ export default function Home() {
   const [login, setLogin] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect( () => {
     if (!isLoading && authUser) {
       router.push('/dashboard');
+      addUserToCollection(authUser);
     }
   })
+
+  async function addUserToCollection(authUser) {
+    const docRef = doc(db, 'users', authUser.email);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      setDoc(docRef, { totalScore: 0 });
+    }
+  }
 
   return ((authUser || isLoading) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
   </CircularProgress> :
@@ -65,7 +78,10 @@ export default function Home() {
               Login / Register
             </Button>
           </div>
-          <Dialog open= {login} onClose={() => setLogin(false)}>
+          <Dialog open= {login} onClose={() => 
+            {
+              setLogin(false)
+            }}>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}></StyledFirebaseAuth>
           </Dialog>
         </Container>
