@@ -25,7 +25,7 @@ import { auth } from '../firebase/firebase';
 import { db } from '../firebase/firebase';
 import { doc, updateDoc, setDoc } from 'firebase/firestore';
 import { addDoc, collection, getDoc } from 'firebase/firestore';
-import { useAuth } from '../firebase/auth';
+import { useAuth, getAuth } from '../firebase/auth';
 import styles from '../styles/landing.module.scss';
 
 
@@ -55,9 +55,9 @@ export default function Home() {
   async function addUserToCollection(authUser) {
     const docRef = doc(db, 'users', authUser.email);
     const docSnap = await getDoc(docRef);
-
+    const user = auth.currentUser;
     if (!docSnap.exists()) {
-      setDoc(docRef, { totalScore: 0 });
+      setDoc(docRef, { displayName: user.displayName, totalScore: 0 });
     }
   }
 
