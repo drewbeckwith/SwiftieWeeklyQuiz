@@ -27,6 +27,7 @@ import { doc, updateDoc, setDoc } from 'firebase/firestore';
 import { addDoc, collection, getDoc } from 'firebase/firestore';
 import { useAuth, getAuth } from '../firebase/auth';
 import styles from '../styles/landing.module.scss';
+import NavBar from '../components/navbar';
 
 
 const REDIRECT_PAGE = '/dashboard';
@@ -69,6 +70,7 @@ export default function Home() {
       </Head>
 
       <main>
+      <NavBar />
         <Container className={styles.container}>
           <Typography variant="h1"></Typography>
           <Typography variant="h2"></Typography>

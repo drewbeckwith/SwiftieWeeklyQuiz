@@ -1,5 +1,5 @@
 //TO DO  1:18 in https://www.youtube.com/watch?v=UX5HIrxbRUc
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { resultInitialState } from '../constants/constants.js'; //resultInitialState from '../constants/constants.js'
 import AnswerTimer from './AnswerTimer.jsx';
 import { app, db } from '../firebase/firebase.js';
@@ -15,6 +15,7 @@ const Quiz = ({ questions }) => {
     const [showStart, setShowStart]= useState(true);
     const [showAnswerTimer, setShowAnswerTimer]= useState(true);
     const { authUser, signOut } = useAuth();
+    const myContainer = useRef(null);
 
     const { question, choices, correctAnswer } = questions[currentQuestion];
 
@@ -53,13 +54,14 @@ const Quiz = ({ questions }) => {
                  wrongAnswer: result.wrongAnswer + 1
              }
             );
+            
+            console.log(myContainer.current);
         if (currentQuestion !== questions.length - 1) {
             setCurrentQuestion((prev) => prev + 1)
         }
         else {
             setCurrentQuestion(0);
             setShowResult(true);
-            console.log(result)
         }
         setTimeout(() => {
             setShowAnswerTimer(true);
@@ -84,7 +86,7 @@ const Quiz = ({ questions }) => {
                     <button className='start-quiz' onClick={() => setShowStart(false)}>Click to play!</button>
                 </div>) :
                 !showResult ? (<>
-                    {showAnswerTimer && <AnswerTimer duration={100} onTimeUp={handleTimeUp}/>}
+                    {showAnswerTimer && <AnswerTimer score = {0} duration={100} onTimeUp={handleTimeUp}/>}
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
                     <h2>{question}</h2>
