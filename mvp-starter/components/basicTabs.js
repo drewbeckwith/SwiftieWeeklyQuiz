@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Quiz from './quiz';
 import { swiftieQuiz } from '../constants/constants.js';
 import Leaderboard from './leaderboard.js';
+import { useState } from 'react';
 
 
 function CustomTabPanel(props) {
@@ -35,10 +36,19 @@ function a11yProps(index) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
-
+  const [isPlaying, setIsPlaying]= useState(false);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    if (newValue === 1 && isPlaying)  {
+      alert("Please finish the quiz before viewing the leaderboard");
+    }
+    else {
+      setValue(newValue);
+    }
   };
+
+  const handlePlayStateChange = (state) => {
+    setIsPlaying(state);
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -49,7 +59,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        < Quiz questions = { swiftieQuiz.questions }/>
+        < Quiz questions  = {swiftieQuiz.questions} handlePlayStateChange = {handlePlayStateChange}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         < Leaderboard />
