@@ -6,7 +6,7 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 
-const Quiz = ({ questions }) => {
+const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answerIdx, setAnswerIdx]= useState(null);
     const [answer, setAnswer]= useState(null);
@@ -16,6 +16,7 @@ const Quiz = ({ questions }) => {
     const [showAnswerTimer, setShowAnswerTimer]= useState(true);
     const { authUser, signOut } = useAuth();
     const myContainer = useRef(null);
+    const questionLetter = ["A", "B", "C", "D"];
 
     const { question, choices, correctAnswer } = questions[currentQuestion];
 
@@ -62,6 +63,7 @@ const Quiz = ({ questions }) => {
         else {
             setCurrentQuestion(0);
             setShowResult(true);
+            handlePlayStateChange(false);
         }
         setTimeout(() => {
             setShowAnswerTimer(true);
@@ -83,23 +85,36 @@ const Quiz = ({ questions }) => {
                 { showStart ? (
                 <div className="start-quiz-container">
                     <h1>Call yourself a Swiftie?</h1>
-                    <button className='start-quiz' onClick={() => setShowStart(false)}>Click to play!</button>
+                    <button className='start-quiz' onClick={() => 
+                        {
+                            setShowStart(false);
+                            handlePlayStateChange(true);
+                        }}>Click to play!</button>
                 </div>) :
                 !showResult ? (<>
-                    {showAnswerTimer && <AnswerTimer score = {0} duration={100} onTimeUp={handleTimeUp}/>}
+                    {showAnswerTimer && <AnswerTimer score = {0} duration={1000} onTimeUp={handleTimeUp}/>}
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
                     <h2>{question}</h2>
-                    <ul>
-                        {choices.map((answer, index) => (
-                            <li 
-                                key={answer}
-                                onClick={() => onAnswerClick(answer, index)}
-                                className={answerIdx === index ? 'selected-answer' : null}>
-                                {answer}
-                            </li>
-                        ))}
-                    </ul>
+                    <div className='answers-list'>
+                        <ul>
+                            {choices.map((answer, index) => (
+                                <div className='heart-answer-container'>
+                                    <div className='heart-container'>
+                                        <span className='heart'>
+                                            <div className='heart-letter'>{questionLetter[index]}</div>
+                                        </span>
+                                    </div>
+                                    <li 
+                                        key={answer}
+                                        onClick={() => onAnswerClick(answer, index)}
+                                        className={answerIdx === index ? 'selected-answer' : null}>
+                                        {answer}
+                                    </li>
+                                </div>
+                            ))}
+                        </ul>
+                    </div>
                     <div className = "footer">
                         <button onClick={() => onClickNext(answer)} disabled={answerIdx === null}>
                             {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
@@ -107,10 +122,9 @@ const Quiz = ({ questions }) => {
                     </div>
                 </>) : 
                     <div className="result">
-                        <h3>Result</h3>
+                        <h3>Here is how you did!</h3>
                         <p>
                             Total Questions : {questions.length}
-                         
                         </p>
                         <p>
                             Total Score : {result.score}
@@ -121,10 +135,14 @@ const Quiz = ({ questions }) => {
                         <p>
                             Wrong Answers : {result.wrongAnswer}
                         </p>
-                        <button onClick = {onTryAgain}>Try Again</button>
-                        {
-                            console.log(result)
-                        }  
+                        <div className='next-actions'>
+                            <button className = "next-action-button" onClick = {
+                                async () => {
+                                    await navigator.clipboard.writeText(`I scored a ${result.score} on the weekly quiz at whosyourmother.com. Can you beat me?`);
+                                }
+                            }>Share Results</button>
+                            <button className = "next-action-button" onClick = {onTryAgain}>Try Again?</button>
+                        </div>
                     </div>             
                     }
                 
