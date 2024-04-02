@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from "react"
-function AnswerTimer ({score, duration, onTimeUp}) {
+function AnswerTimer ({duration, onTimeUp, onScoreChange}) {
     const [counter, setCounter] = useState(0);
     const [progressLoaded, setProgressLoaded] = useState(0);
     const intervalRef = useRef();
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setCounter((counter) => counter + 1)
-            score = score + 1;
+            onScoreChange()
         }, 100)
 
         return () => clearInterval(intervalRef.current);
