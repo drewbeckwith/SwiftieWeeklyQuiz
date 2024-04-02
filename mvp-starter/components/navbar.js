@@ -34,7 +34,7 @@ export default function NavBar() {
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 {authUser?.email}
               </Typography>
-              <Button variant="text" color="secondary" onClick={signOut}>
+              <Button variant="text" color="secondary" style={{ display: authUser ? 'block' : 'none' }} onClick={signOut}>
                 Logout
               </Button>
             </Stack>
