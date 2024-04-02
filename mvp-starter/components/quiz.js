@@ -16,6 +16,8 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
     const [showAnswerTimer, setShowAnswerTimer]= useState(true);
     const { authUser, signOut } = useAuth();
     const myContainer = useRef(null);
+    const [counter, setCounter] = useState(100);
+    
     const questionLetter = ["A", "B", "C", "D"];
 
     const { question, choices, correctAnswer } = questions[currentQuestion];
@@ -43,20 +45,20 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
     const onClickNext = (finalAnswer) => {
         setShowAnswerTimer(false);
         setAnswerIdx(null);
+        console.log(counter)
         setResult(result => 
             finalAnswer 
              ? {
                  ...result,
-                 score: result.score + 5,
+                 score: result.score + Math.ceil(counter/100 *10),
                  correctAnswer: result.correctAnswer + 1
              }
              : {
                  ...result,
                  wrongAnswer: result.wrongAnswer + 1
              }
-            );
-            
-            console.log(myContainer.current);
+        );
+        setCounter(100);
         if (currentQuestion !== questions.length - 1) {
             setCurrentQuestion((prev) => prev + 1)
         }
@@ -79,6 +81,10 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
         setAnswer(false);
         onClickNext(false);
     }
+
+    const handleScoreChange = () => {
+        setCounter((counter) => counter - 1)
+    }
     return (
         <div className="quiz-outer">
             <div className="quiz-container">
@@ -92,7 +98,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                         }}>Click to play!</button>
                 </div>) :
                 !showResult ? (<>
-                    {showAnswerTimer && <AnswerTimer score = {0} duration={1000} onTimeUp={handleTimeUp}/>}
+                    {showAnswerTimer && <AnswerTimer duration={1000} onTimeUp={handleTimeUp} onScoreChange={handleScoreChange}/>}
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
                     <h2>{question}</h2>
