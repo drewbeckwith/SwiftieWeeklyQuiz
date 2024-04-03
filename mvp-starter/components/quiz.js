@@ -6,6 +6,12 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 
+//TODO 
+//1. Move quetions to database
+//2. style leaderboard
+//3. admin roles
+//4. test mode
+
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [answerIdx, setAnswerIdx]= useState(null);
