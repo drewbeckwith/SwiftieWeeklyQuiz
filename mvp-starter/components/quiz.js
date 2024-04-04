@@ -11,6 +11,7 @@ import { useAuth } from '../firebase/auth';
 //2. style leaderboard
 //3. admin roles
 //4. test mode
+//5. Fixed height
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);

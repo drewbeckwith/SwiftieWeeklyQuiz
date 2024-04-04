@@ -31,32 +31,26 @@ export default function Profiles() {
     }
     return (
         <table className="styled-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
             {
                 users.map((item, index) => {
                     if (index < users.length - 1) {
                         return (
                             <tr key={index} style={{}}>
-                                <td>{item.displayName}</td>
-                                <td>{item.totalScore}</td>
+                                <td className="number">{index + 1}</td>
+                                <td className="name">{item.displayName}</td>
+                                <td className='points'>{item.totalScore}</td>
                             </tr>
                         )
                     }
                     return (
-                        <tr key={index} style={{ backgroundColor: 'lightblue' }}>
-                            <td>{"You"}</td>
-                            <td>{item.totalScore}</td>
+                        <tr key={index}>
+                            <td className="number"></td>
+                            <td className="name">{"You"}</td>
+                            <td className="points">{item.totalScore}</td>
                         </tr>
                     )
                 })
             }
-        </tbody>
     </table>
         );
 }
