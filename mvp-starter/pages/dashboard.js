@@ -61,7 +61,6 @@ export default function Dashboard() {
   const router = useRouter();
   const [action, setAction] = useState(RECEIPTS_ENUM.none);
 
-  
   // State involved in loading, setting, deleting, and updating receipts
   const [isLoadingReceipts, setIsLoadingReceipts] = useState(true);
   const [deleteReceiptId, setDeleteReceiptId] = useState("");
@@ -73,42 +72,14 @@ export default function Dashboard() {
   const [showSuccessSnackbar, setSuccessSnackbar] = useState(false);
   const [showErrorSnackbar, setErrorSnackbar] = useState(false);
 
-  // Sets appropriate snackbar message on whether @isSuccess and updates shown receipts if necessary
-  const onResult = async (receiptEnum, isSuccess) => {
-    setSnackbarMessage(isSuccess ? SUCCESS_MAP[receiptEnum] : ERROR_MAP[receiptEnum]);
-    isSuccess ? setSuccessSnackbar(true) : setErrorSnackbar(true);
-    setAction(RECEIPTS_ENUM.none);
-  }
-
   // Listen to changes for loading and authUser, redirect if needed
   useEffect(() => {
     if (!authUser) {
       router.push("/");
     }
   }, [authUser, isLoading]);
-
   // For all of the onClick functions, update the action and fields for updating
 
-  const onClickAdd = () => {
-    setAction(RECEIPTS_ENUM.add);
-    setUpdateReceipt({});
-  }
-
-  const onUpdate = (receipt) => {
-    setAction(RECEIPTS_ENUM.edit);
-    setUpdateReceipt(receipt);
-  }
-
-  const onClickDelete = (id, imageBucket) => {
-    setAction(RECEIPTS_ENUM.delete);
-    setDeleteReceiptId(id);
-    setDeleteReceiptImageBucket(imageBucket);
-  }
-
-  const resetDelete = () => {
-    setAction(RECEIPTS_ENUM.none);
-    setDeleteReceiptId("");
-  }
 
   return ((!authUser || isLoading) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
     </CircularProgress> :

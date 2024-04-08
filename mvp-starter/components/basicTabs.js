@@ -1,12 +1,15 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Quiz from './quiz';
 import { swiftieQuiz } from '../constants/constants.js';
 import Leaderboard from './leaderboard.js';
-import { useState } from 'react';
+import { db } from '../firebase/firebase.js';
+import { collection, getDocs, getDoc, doc, limit, query, updateDoc, orderBy, onSnapshot } from "firebase/firestore";
+import { Alert, Button, CircularProgress, Container, Dialog, DialogContent, DialogActions, Divider, IconButton, Snackbar, Stack, Typography } from '@mui/material';
+import { useAuth } from '../firebase/auth';
+import { useState, useEffect } from 'react';
 
 
 function CustomTabPanel(props) {
@@ -37,6 +40,9 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isPlaying, setIsPlaying]= useState(false);
+  const [loadingQuestions, setLoadingQuestions] = useState(true); 
+  const [questions, setQuestions] = useState([]); 
+
   const handleChange = (event, newValue) => {
     if (newValue === 1 && isPlaying)  {
       alert("Please finish the quiz before viewing the leaderboard");
@@ -50,7 +56,31 @@ export default function BasicTabs() {
     setIsPlaying(state);
   }
 
+  useEffect(() => { 
+    const loadPost = async () => { 
+        // Till the data is fetch using API 
+        // the Loading page will show. 
+        setLoadingQuestions(true); 
+        //const usersRef = collection(db, "questions");
+        const docRef = doc(db, 'questions', "testid");
+        const docSnap = await getDoc(docRef);
+        var questions = [];
+        console.log(docSnap.data());
+
+        // After fetching data stored it in posts state. 
+        setQuestions(docSnap.data()["Question"]); 
+
+        // Closed the loading page 
+        setLoadingQuestions(false); 
+    }; 
+
+    // Call the function 
+    loadPost(); 
+}, []); 
+
   return (
+    (loadingQuestions) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
+    </CircularProgress> :
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary" centered>
@@ -59,7 +89,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        < Quiz questions  = {swiftieQuiz.questions} handlePlayStateChange = {handlePlayStateChange}/>
+        < Quiz handlePlayStateChange = {handlePlayStateChange}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         < Leaderboard />
