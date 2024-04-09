@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Quiz from './quiz';
+import Admin from './admin';
 import { swiftieQuiz } from '../constants/constants.js';
 import Leaderboard from './leaderboard.js';
 import { auth, db } from '../firebase/firebase.js';
@@ -40,7 +41,7 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isPlaying, setIsPlaying]= useState(false);
-  const [isAdmin, setAdmin] = React.useState(true);
+  const [isAdmin, setAdmin] = React.useState(false);
   const { authUser, signOut } = useAuth();
   const [loadingQuestions, setLoadingQuestions] = useState(true); 
   const [questions, setQuestions] = useState([]); 
@@ -58,13 +59,26 @@ export default function BasicTabs() {
     setIsPlaying(state);
   }
 
+  const userClosure = () => {
+    const getUser = () => {
+      return auth.currentUser.email;
+    };
+    return {
+      getUser
+    }
+   }
+
+
+
   useEffect(() => { 
-  //  if (authUser.email === "drewbeckwith12@gmail.com") {
-   //   setAdmin(true);
-   // }
-   // else {
-    //  setAdmin(false);
-    if (authUser) {
+  const closure = userClosure();
+  if (authUser) {
+   if (closure.getUser() === "drewbeckwith12@gmail.com") {
+     setAdmin(true);
+   }
+   else {
+    setAdmin(false);
+    
     const loadPost = async () => { 
           // Till the data is fetch using API 
           // the Loading page will show. 
@@ -83,7 +97,8 @@ export default function BasicTabs() {
     // Call the function 
     loadPost(); 
   }
-}, []); 
+}
+}, [isAdmin, authUser]); 
 
   return (
     (!authUser) ? <Box sx={{ width: '100%' }}>
@@ -93,8 +108,8 @@ export default function BasicTabs() {
         <Tab label="Leaderboard" />
       </Tabs>
     </Box></Box> :
-    (!isAdmin) ? <Box /> :
-    (loadingQuestions) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
+    
+    (loadingQuestions) ? (isAdmin) ? <Admin questions = {questions} ></Admin> : <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
     </CircularProgress> :
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

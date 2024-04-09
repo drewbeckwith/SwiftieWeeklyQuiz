@@ -1,4 +1,3 @@
-//TO DO  1:18 in https://www.youtube.com/watch?v=UX5HIrxbRUc
 import { useState, useEffect, useRef } from 'react';
 import { resultInitialState } from '../constants/constants.js'; //resultInitialState from '../constants/constants.js'
 import AnswerTimer from './AnswerTimer.jsx';

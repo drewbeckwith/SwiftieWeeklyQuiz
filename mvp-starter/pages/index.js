@@ -21,7 +21,7 @@ import { useRouter } from 'next/router';
 import { EmailAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Button, CircularProgress, Container, Dialog, Typography } from '@mui/material';
-import { auth } from '../firebase/firebase';
+import { auth } from '../firebase/firebase.js';
 import { db } from '../firebase/firebase';
 import { doc, updateDoc, setDoc } from 'firebase/firestore';
 import { addDoc, collection, getDoc } from 'firebase/firestore';
