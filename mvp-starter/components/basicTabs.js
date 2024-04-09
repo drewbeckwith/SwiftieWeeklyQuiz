@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Quiz from './quiz';
 import { swiftieQuiz } from '../constants/constants.js';
 import Leaderboard from './leaderboard.js';
-import { db } from '../firebase/firebase.js';
+import { auth, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, doc, limit, query, updateDoc, orderBy, onSnapshot } from "firebase/firestore";
 import { Alert, Button, CircularProgress, Container, Dialog, DialogContent, DialogActions, Divider, IconButton, Snackbar, Stack, Typography } from '@mui/material';
 import { useAuth } from '../firebase/auth';
@@ -40,6 +40,8 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isPlaying, setIsPlaying]= useState(false);
+  const [isAdmin, setAdmin] = React.useState(true);
+  const { authUser, signOut } = useAuth();
   const [loadingQuestions, setLoadingQuestions] = useState(true); 
   const [questions, setQuestions] = useState([]); 
 
@@ -57,28 +59,41 @@ export default function BasicTabs() {
   }
 
   useEffect(() => { 
+  //  if (authUser.email === "drewbeckwith12@gmail.com") {
+   //   setAdmin(true);
+   // }
+   // else {
+    //  setAdmin(false);
+    if (authUser) {
     const loadPost = async () => { 
-        // Till the data is fetch using API 
-        // the Loading page will show. 
-        setLoadingQuestions(true); 
-        //const usersRef = collection(db, "questions");
-        const docRef = doc(db, 'questions', "testid");
-        const docSnap = await getDoc(docRef);
-        var questions = [];
-        console.log(docSnap.data());
+          // Till the data is fetch using API 
+          // the Loading page will show. 
+          setLoadingQuestions(true); 
+          //const usersRef = collection(db, "questions");
+          const docRef = doc(db, 'questions', "testid");
+          const docSnap = await getDoc(docRef);
+          var questions = [];
 
-        // After fetching data stored it in posts state. 
-        setQuestions(docSnap.data()["Question"]); 
+          // After fetching data stored it in posts state. 
+          setQuestions(docSnap.data()["Question"]); 
 
-        // Closed the loading page 
-        setLoadingQuestions(false); 
+          // Closed the loading page 
+          setLoadingQuestions(false); 
     }; 
-
     // Call the function 
     loadPost(); 
+  }
 }, []); 
 
   return (
+    (!authUser) ? <Box sx={{ width: '100%' }}>
+    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Tabs value={value}  aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary" centered>
+        <Tab label="Weekly Quiz" />
+        <Tab label="Leaderboard" />
+      </Tabs>
+    </Box></Box> :
+    (!isAdmin) ? <Box /> :
     (loadingQuestions) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
     </CircularProgress> :
     <Box sx={{ width: '100%' }}>

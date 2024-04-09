@@ -28,6 +28,7 @@ import { addDoc, collection, getDoc } from 'firebase/firestore';
 import { useAuth, getAuth } from '../firebase/auth';
 import styles from '../styles/landing.module.scss';
 import NavBar from '../components/navbar';
+import BasicTabs from '../components/basicTabs';
 
 
 const REDIRECT_PAGE = '/dashboard';
@@ -68,25 +69,28 @@ export default function Home() {
       <Head>
         <title>WHO IS YOUR MOTHER?</title>
       </Head>
-
-      <main>
       <NavBar />
-        <Container className={styles.container}>
-          <Typography variant="h1"></Typography>
-          <Typography variant="h2"></Typography>
-          <div className={styles.buttons}>
-            <Button variant="contained" color="secondary"
-              onClick={() => setLogin(true)}>
-              Login / Register
-            </Button>
-          </div>
-          <Dialog open= {login} onClose={() => 
-            {
+      <Container>
+        <BasicTabs />
+      </Container>
+      <main className='mainLaunchScreen'>
+      <div className="quiz-outer">
+        <div className="quiz-container">
+          <div className="start-quiz-container-no-auth">
+              <h1>Call yourself a Swiftie?</h1>
+              <Button className='buttonLogin' variant="contained" color="secondary"
+                onClick={() => setLogin(true)}>
+                Login / Register to Play!
+              </Button>
+              <Dialog open= {login} onClose={() => 
+              {
               setLogin(false)
-            }}>
+              }}>
             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}></StyledFirebaseAuth>
-          </Dialog>
-        </Container>
+            </Dialog>
+          </div>
+        </div> 
+      </div>
       </main>
     </div>);
 }

@@ -5,6 +5,11 @@ $bg-accent: #e7e8e9;
 $disabled: #9c9c9c;
 $foreground: #2d264b;
 
+.mainLaunchScreen {
+  width: 60%;
+  margin-left: 20%;
+}
+
 .quiz-outer {
     font-family: monospace;
     background: linear-gradient(106.5deg, rgba(255, 215, 185, 0.91) 23%, rgba(223, 159, 247, 0.8) 93%);
@@ -160,6 +165,17 @@ $foreground: #2d264b;
             cursor: not-allowed;
         }
     }
+
+    .buttonLogin {
+      background: linear-gradient(106.5deg, rgba(255, 215, 185, 0.91) 23%, rgba(223, 159, 247, 0.8) 93%);
+      border-radius: 9px;
+      font-size: 11px;
+      color: $bg;
+      outline: none;
+      border: none;
+      left: 15%;
+      cursor: pointer;
+  }
         .result {
             text-align: center;
 
@@ -200,6 +216,21 @@ $foreground: #2d264b;
         top: 60%;
         transform: translate(-50%, -50%);
     }
+
+}
+
+.start-quiz-container-no-auth {
+  height: 8vh;
+  h1 {
+      text-align: center;
+  }
+
+  .buttonLogin {
+      position: absolute;
+      left: 50%;
+      top: 65%;
+      transform: translate(-50%, -50%);
+  }
 
 }
 .answer-timer-container {
@@ -248,7 +279,7 @@ $foreground: #2d264b;
     color: var(--color-dark)
 }
 
-main {
+.leaderboardMain {
   width: 40rem;
   background-color: #ffffff;
   -webkit-box-shadow: 0px 5px 15px 8px #e4e7fb;
