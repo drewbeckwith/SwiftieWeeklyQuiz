@@ -89,7 +89,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        < Quiz handlePlayStateChange = {handlePlayStateChange}/>
+        < Quiz questions = {questions} handlePlayStateChange = {handlePlayStateChange}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         < Leaderboard />

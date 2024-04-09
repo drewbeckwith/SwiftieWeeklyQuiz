@@ -1,7 +1,7 @@
 export const swiftieQuiz = {
     questions: [
         {
-            question: "What is Taylor Swift's middle name?",
+            questionString: "What is Taylor Swift's middle name?",
             choices: [
                 "Alice",
                 "Avery", 

@@ -5,13 +5,13 @@ import AnswerTimer from './AnswerTimer.jsx';
 import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
-
 //TODO 
 //1. Move quetions to database
 //2. style leaderboard
 //3. admin roles
 //4. test mode
 //5. Fixed height
+//6. leaderboard scrollable
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -27,11 +27,11 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
     
     const questionLetter = ["A", "B", "C", "D"];
 
-    const { question, choices, correctAnswer } = questions[currentQuestion];
+    const { questionString, choices, correctAnswer } = questions[currentQuestion];
 
     const onAnswerClick = (answer, index) => {
         setAnswerIdx(index);
-        if (answer === correctAnswer) {
+        if (answer.toLowerCase() === correctAnswer.toLowerCase()) {
             setAnswer(true)
         }
         else {
@@ -52,7 +52,6 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
     const onClickNext = (finalAnswer) => {
         setShowAnswerTimer(false);
         setAnswerIdx(null);
-        console.log(counter)
         setResult(result => 
             finalAnswer 
              ? {
@@ -108,7 +107,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                     {showAnswerTimer && <AnswerTimer duration={1000} onTimeUp={handleTimeUp} onScoreChange={handleScoreChange}/>}
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
-                    <h2>{question}</h2>
+                    <h2>{questionString}</h2>
                     <div className='answers-list'>
                         <ul>
                             {choices.map((answer, index) => (
@@ -119,10 +118,10 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                                         </span>
                                     </div>
                                     <li 
-                                        key={answer}
-                                        onClick={() => onAnswerClick(answer, index)}
+                                        key={answer.answerString}
+                                        onClick={() => onAnswerClick(answer.answerString, index)}
                                         className={answerIdx === index ? 'selected-answer' : null}>
-                                        {answer}
+                                        {answer.answerString}
                                     </li>
                                 </div>
                             ))}
