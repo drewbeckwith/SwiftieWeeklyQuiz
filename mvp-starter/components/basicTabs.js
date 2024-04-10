@@ -78,6 +78,7 @@ export default function BasicTabs() {
    }
    else {
     setAdmin(false);
+   }
     
     const loadPost = async () => { 
           // Till the data is fetch using API 
@@ -96,7 +97,6 @@ export default function BasicTabs() {
     }; 
     // Call the function 
     loadPost(); 
-  }
 }
 }, [isAdmin, authUser]); 
 
@@ -109,8 +109,8 @@ export default function BasicTabs() {
       </Tabs>
     </Box></Box> :
     
-    (loadingQuestions) ? (isAdmin) ? <Admin questions = {questions} ></Admin> : <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
-    </CircularProgress> :
+    (loadingQuestions) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
+    </CircularProgress> : (isAdmin) ? <Admin questions = {questions} ></Admin> :
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary" centered>

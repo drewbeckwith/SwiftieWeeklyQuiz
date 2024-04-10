@@ -5,11 +5,9 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 //TODO 
-//3. admin roles
 //4. test mode
-//5. Fixed height
+//5. different type of questions
 //6. leaderboard scrollable
-//7. style sign in page
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -116,10 +114,10 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                                         </span>
                                     </div>
                                     <li 
-                                        key={answer.answerString}
-                                        onClick={() => onAnswerClick(answer.answerString, index)}
+                                        key={answer}
+                                        onClick={() => onAnswerClick(answer, index)}
                                         className={answerIdx === index ? 'selected-answer' : null}>
-                                        {answer.answerString}
+                                        {answer}
                                     </li>
                                 </div>
                             ))}
