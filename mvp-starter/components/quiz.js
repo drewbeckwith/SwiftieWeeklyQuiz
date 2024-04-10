@@ -1,4 +1,3 @@
-//TO DO  1:18 in https://www.youtube.com/watch?v=UX5HIrxbRUc
 import { useState, useEffect, useRef } from 'react';
 import { resultInitialState } from '../constants/constants.js'; //resultInitialState from '../constants/constants.js'
 import AnswerTimer from './AnswerTimer.jsx';
@@ -6,12 +5,11 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 //TODO 
-//1. Move quetions to database
-//2. style leaderboard
 //3. admin roles
 //4. test mode
 //5. Fixed height
 //6. leaderboard scrollable
+//7. style sign in page
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);

@@ -79,8 +79,6 @@ export default function Dashboard() {
     }
   }, [authUser, isLoading]);
   // For all of the onClick functions, update the action and fields for updating
-
-
   return ((!authUser || isLoading) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
     </CircularProgress> :
     <div>
