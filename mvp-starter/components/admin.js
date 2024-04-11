@@ -55,13 +55,44 @@ const Admin = ({questions}) => {
     }
 
     const addQestion = () => {
-        setQuestionState(questionState.concat({"choices": ["", "", "", ""], "questionString": "", "correctAnswer": ""}));
+        const questionStateCopy = changeQuestions();
+        setQuestionState(questionStateCopy.concat({"choices": ["", "", "", ""], "questionString": "", "correctAnswer": ""}));
     }    
 
-    const inputChangedHandler = (event) => {
-        event.preventDefault();
-        // May be call for search result
+    function TextBox ({id, className, defaultText}) {
+
+        const [text, setText] = useState(defaultText);
+    
+       return (
+               <textarea id = {id} 
+                 className = {className}
+                 value={text} 
+                 onChange={(e) => setText(e.target.value) }>
+              </textarea>
+             );
+    
     }
+
+    function RadioButton ({id, className, name, defaultChecked}) {
+
+        const onOff = {
+            on: true,
+            off: false}
+
+        const [checked, setChecked] = useState(defaultChecked);
+    
+       return (
+               <input id = {id}
+                 type="radio"
+                 name = {name}
+                 className = {className}
+                 defaultChecked={checked} 
+                 onChange={(e) => setChecked(onOff[e.target.value]) }>
+              </input>
+             );
+    
+    }
+    
 
     return (
         <div>
@@ -70,13 +101,13 @@ const Admin = ({questions}) => {
                     return (
                         <div className="questionEditorDiv" key={index}>
                             <label className="question">{(index + 1)}</label>
-                            <textarea type="text" className="questionStringText" id="question" defaultValue = {question.questionString} required />
-                            {question.choices.map((choice, index) => {
+                            <TextBox id = {"question"} className={"questionStringText"} defaultText={question.questionString} />
+                            {question.choices.map((choice, indexChoice) => {
                                 return (
-                                    <div className="choiceDiv" key={index}>
-                                        <label className="choice">{questionLetter[index]}</label>
-                                        <textarea type="text" className="questionChoiceText" id="choice" defaultValue={choice} required />
-                                        <input className = "checkboxCorrect" type="radio" name = {"checkboxCorrect " + question.questionString} defaultChecked = {question.correctAnswer === choice} />
+                                    <div className="choiceDiv" key={indexChoice}>
+                                        <label className="choice">{questionLetter[indexChoice]}</label>
+                                        <TextBox id = {"choice"} className={"questionChoiceText"} defaultText={choice} />
+                                        <RadioButton className = {"checkboxCorrect"}  name = {"checkboxCorrect " + question.questionString + index} defaultChecked = {question.correctAnswer === choice} />
                                     </div>
                                 )
                             })
