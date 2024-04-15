@@ -5,9 +5,8 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 //TODO 
-//4. test mode
-//5. different type of questions
-//6. leaderboard scrollable
+//4. leaderboard coming off
+//6. contact us
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
