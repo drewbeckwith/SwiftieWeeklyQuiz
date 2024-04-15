@@ -35,15 +35,49 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
         }
     } 
 
+    const resultClosure = () => {
+        const getResult = () => {
+          return result.score
+        };
+        return {
+            getResult
+        }
+    }
+
+
+    const mondayClosure = () => {
+        const getMonday = () => {
+            var d = new Date();
+            var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff));
+        };
+        return {
+            getMonday
+        }
+    }
+
     useEffect(() => {
         if (showResult) {
             const docRef = doc(db, 'users', authUser.email);
             const docSnap = getDoc(docRef).then((snapshot) => {
-              const currScore = snapshot.data().totalScore;
-              updateDoc(docRef, { totalScore: currScore + result.score });
+            const score = () => {
+                const getScore = () => {
+                    return resultClosure().getResult();
+                };
+                return {
+                    getScore
+                }
+            }
+              const mondayClosure1 = mondayClosure();
+              const thisMonday = mondayClosure1.getMonday().toLocaleDateString().replaceAll('/', '');
+              if (snapshot.data()[thisMonday] == null) {
+                updateDoc(docRef, {[thisMonday]: score().getScore()});
+              }
             });
         }
       }, [showResult]);
+
 
     const onClickNext = (finalAnswer) => {
         setShowAnswerTimer(false);
@@ -130,7 +164,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                     </div>
                 </>) : 
                     <div className="result">
-                        <h3>Here is how you did!</h3>
+                        <h2>Come back next Monday for a shot at new questions!</h2>
                         <p>
                             Total Questions : {questions.length}
                         </p>

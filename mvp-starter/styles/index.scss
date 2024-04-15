@@ -297,18 +297,19 @@ $foreground: #2d264b;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 1.5rem;
 }
 
 
 
 .headerLeaderboard {
   font-family: "Rubik", sans-serif;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: #141a39;
   text-transform: uppercase;
   cursor: default;
   margin-left: 10%;
+  height: .1rem;
 }
 
 #leaderboard {
@@ -342,16 +343,16 @@ tr:nth-child(odd) {
 
 
 td {
-  height: 5rem;
+  height: fit-content;
   font-family: "Rubik", sans-serif;
-  font-size: 1.4rem;
+  font-size: .8rem;
   padding: 1rem 2rem;
   position: relative;
 }
 
 .number {
   width: 1rem;
-  font-size: 2.2rem;
+  font-size: 1rem;
   font-weight: bold;
   text-align: left;
 }
@@ -363,7 +364,7 @@ td {
 
 .points {
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: .8rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;

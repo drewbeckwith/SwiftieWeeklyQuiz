@@ -6,7 +6,16 @@ import { auth } from '../firebase/firebase.js';
 export default function Profiles() {
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
+    const [thisMonday, setThisMonday] = useState(getMonday(new Date()));
+
     let currentUser;
+    function getMonday(d) {
+            var day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            const dateToParse = new Date(d.setDate(diff));
+            const toRet = dateToParse.toLocaleDateString().replaceAll('/', '')
+            return toRet;
+    }
     const getUsers = async () => {
             setLoading(true);
             setLoading(false);
@@ -14,7 +23,7 @@ export default function Profiles() {
             const docRef = doc(db, 'users', auth.currentUser.email);
             currentUser = await getDoc(docRef);
             var users = [];
-            const q = query(usersRef, orderBy("totalScore", "desc"), limit(10));
+            const q = query(usersRef, orderBy(`${thisMonday}`, "desc"), limit(9));
             onSnapshot(q, (snapShot) => {
                 snapShot.docs.forEach((doc) => {
                     users.push(doc.data());
@@ -31,6 +40,7 @@ export default function Profiles() {
     }
     return (
         <table className="styled-table">
+            <tbody>
             {
                 users.map((item, index) => {
                     if (index < users.length - 1) {
@@ -38,7 +48,7 @@ export default function Profiles() {
                             <tr key={index} style={{}}>
                                 <td className="number">{index + 1}</td>
                                 <td className="name">{item.displayName}</td>
-                                <td className='points'>{item.totalScore}</td>
+                                <td className='points'>{item[`${thisMonday}`]}</td>
                             </tr>
                         )
                     }
@@ -46,11 +56,12 @@ export default function Profiles() {
                         <tr key={index}>
                             <td className="number"></td>
                             <td className="name">{"You"}</td>
-                            <td className="points">{item.totalScore}</td>
+                            <td className="points">{item[`${thisMonday}`]}</td>
                         </tr>
                     )
                 })
             }
+            </tbody>
     </table>
         );
 }
