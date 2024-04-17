@@ -97,7 +97,10 @@ export default function Dashboard() {
           <Alert onClose={() => setErrorSnackbar(false)} severity="error">{snackbarMessage}</Alert>
         </Snackbar>
         <BasicTabs />
-      </Container>
+        <div className='footer'>
+        <p style={{ textAlign: 'center' }}></p>
+        </div>
+      </Container> 
     </div>
   )
 }

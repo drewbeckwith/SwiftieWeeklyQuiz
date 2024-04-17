@@ -5,8 +5,6 @@ import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc } from "firebase/firestore";
 import { useAuth } from '../firebase/auth';
 //TODO 
-//4. leaderboard coming off
-//6. contact us
 
 const Quiz = ({ questions, handlePlayStateChange}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -133,7 +131,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                         }}>Click to play!</button>
                 </div>) :
                 !showResult ? (<>
-                    {showAnswerTimer && <AnswerTimer duration={1000} onTimeUp={handleTimeUp} onScoreChange={handleScoreChange}/>}
+                    {showAnswerTimer && <AnswerTimer duration={100} onTimeUp={handleTimeUp} onScoreChange={handleScoreChange}/>}
                     <span className = "active-question-no">{ currentQuestion + 1 }</span>
                     <span className = "total-question">/{questions.length}</span>
                     <h2>{questionString}</h2>
@@ -180,6 +178,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                             <button className = "next-action-button" onClick = {
                                 async () => {
                                     await navigator.clipboard.writeText(`I scored a ${result.score} on the weekly quiz at whosyourmother.com. Can you beat me?`);
+                                    alert("Copied to clipboard!");
                                 }
                             }>Share Results</button>
                             <button className = "next-action-button" onClick = {onTryAgain}>Try Again?</button>

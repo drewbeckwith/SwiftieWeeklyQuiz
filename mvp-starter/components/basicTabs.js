@@ -3,9 +3,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Quiz from './quiz';
-import Admin from './admin';
+import Quiz2 from './quiz2.js';
 import { swiftieQuiz } from '../constants/constants.js';
 import Leaderboard from './leaderboard.js';
+import AboutUs from './aboutUs.js';
 import { auth, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, doc, limit, query, updateDoc, orderBy, onSnapshot } from "firebase/firestore";
 import { Alert, Button, CircularProgress, Container, Dialog, DialogContent, DialogActions, Divider, IconButton, Snackbar, Stack, Typography } from '@mui/material';
@@ -41,21 +42,21 @@ function a11yProps(index) {
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const [isPlaying, setIsPlaying]= useState(false);
-  const [isAdmin, setAdmin] = React.useState(false);
+  const [isQuiz2, setQuiz2] = React.useState(false);
   const { authUser, signOut } = useAuth();
   const [loadingQuestions, setLoadingQuestions] = useState(true); 
   const [questions, setQuestions] = useState([]); 
 
   const handleChange = (event, newValue) => {
-    if (newValue === 1 && isPlaying)  {
-      alert("Please finish the quiz before viewing the leaderboard");
-    }
-    else {
+    if (!(newValue !==0 && isPlaying)) {
       setValue(newValue);
     }
   };
 
   const handlePlayStateChange = (state) => {
+    if (state) {
+      alert("Only your first attempt will count towards the leaderboard. Good luck!");
+    }
     setIsPlaying(state);
   }
 
@@ -74,10 +75,10 @@ export default function BasicTabs() {
   const closure = userClosure();
   if (authUser) {
    if (closure.getUser() === "drewbeckwith12@gmail.com") {
-     setAdmin(true);
+     setQuiz2(true);
    }
    else {
-    setAdmin(false);
+    setQuiz2(false);
    }
     
     const loadPost = async () => { 
@@ -98,7 +99,7 @@ export default function BasicTabs() {
     // Call the function 
     loadPost(); 
 }
-}, [isAdmin, authUser]); 
+}, [isQuiz2, authUser]); 
 
   return (
     (!authUser) ? <Box sx={{ width: '100%' }}>
@@ -110,12 +111,13 @@ export default function BasicTabs() {
     </Box></Box> :
     
     (loadingQuestions) ? <CircularProgress color = "inherit" sx={{ marginLeft: "50%", marginTop: "25%"}}>
-    </CircularProgress> : (isAdmin) ? <Admin questions = {questions} ></Admin> :
+    </CircularProgress> : (isQuiz2) ? <Quiz2 questions = {questions} ></Quiz2> :
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary" centered>
           <Tab label="Weekly Quiz" {...a11yProps(0)} />
           <Tab label="Leaderboard" {...a11yProps(1)} />
+          <Tab label="About Us" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -125,7 +127,7 @@ export default function BasicTabs() {
         < Leaderboard />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        < AboutUs />
       </CustomTabPanel>
     </Box>
   );

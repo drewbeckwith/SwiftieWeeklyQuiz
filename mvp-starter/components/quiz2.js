@@ -3,11 +3,10 @@ import { resultInitialState } from '../constants/constants.js'; //resultInitialS
 import AnswerTimer from './AnswerTimer.jsx';
 import { app, db } from '../firebase/firebase.js';
 import { collection, getDocs, getDoc, updateDoc, doc, setDoc } from "firebase/firestore";
-import { useAuth } from '../firebase/auth';
+import { useAuth } from '../firebase/auth.js';
 //TODO 
 
-const Admin = ({questions}) => {
-    console.log(questions);
+const Quiz2 = ({questions}) => {
     const questionLetter = ["A", "B", "C", "D"];
     const [questionState, setQuestionState] = useState(questions);
 
@@ -119,4 +118,4 @@ const Admin = ({questions}) => {
     )
 }
 
-export default Admin;
+export default Quiz2;
