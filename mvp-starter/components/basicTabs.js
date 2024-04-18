@@ -107,6 +107,7 @@ export default function BasicTabs() {
       <Tabs value={value}  aria-label="basic tabs example" textColor="secondary" indicatorColor="secondary" centered>
         <Tab label="Weekly Quiz" />
         <Tab label="Leaderboard" />
+        <Tab label="About Us" />
       </Tabs>
     </Box></Box> :
     
