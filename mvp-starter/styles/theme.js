@@ -80,6 +80,9 @@
          root: {
            fontFamily: fontDefault
          },
+         div: {
+           display: "flex"
+         },
          h1: {
            color: fontColor,
            fontSize: "84px",
