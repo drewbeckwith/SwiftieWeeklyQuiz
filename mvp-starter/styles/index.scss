@@ -253,6 +253,7 @@ $foreground: #2d264b;
 }
 
 .board .leaderboard {
+    width: 100%;
     margin-bottom: 1em;
 }
 
@@ -289,6 +290,7 @@ $foreground: #2d264b;
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem 1.5rem;
+  display: ruby;
 }
 
 
@@ -312,7 +314,7 @@ $foreground: #2d264b;
 table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
   color: #141a39;
   cursor: default;
 }
@@ -333,6 +335,16 @@ tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
 
+.container {
+  font-size: 84px;
+  margin-top: 2em;
+}
+
+.container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 
 td {
   height: fit-content;
@@ -343,18 +355,20 @@ td {
 }
 
 .number {
-  width: 1rem;
+  width: 25%;
   font-size: 1rem;
   font-weight: bold;
   text-align: left;
 }
 
 .name {
+  width: 50%;
   text-align: left;
   font-size: 1.2rem;
 }
 
 .points {
+  width: 25%;
   font-weight: bold;
   font-size: .8rem;
   display: flex;
@@ -362,9 +376,6 @@ td {
   align-items: center;
 }
 
-.points:first-child {
-  width: 10rem;
-}
 
 .aboutUsText {
     padding: 5%;
