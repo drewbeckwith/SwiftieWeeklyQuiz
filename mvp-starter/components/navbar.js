@@ -26,7 +26,7 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" className={styles.appbar}>
         <Toolbar className={styles.toolbar}>
-          <Container className={styles.container}>
+          <Container>
             <Typography variant="h3" sx={{ flexGrow: 1, alignSelf: "center" }}>
               WHO'S YOUR MOTHER?
             </Typography>

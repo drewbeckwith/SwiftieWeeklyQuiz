@@ -99,7 +99,7 @@
          },
          h3: {
            fontFamily: fontTitle,
-           fontSize: "24px"
+           fontSize: "20px"
          },
          h4: {
            color: fontColor,
@@ -112,6 +112,12 @@
            fontWeight: "200"
          },
          h6: {
+          '@media (max-width: 600px)': {
+            display: "none",
+          },
+          '@media (min-width: 600px)': {
+            display: "inline",
+          },
            color: fontColor,
            fontWeight: "200",
            fontSize: "14px"
