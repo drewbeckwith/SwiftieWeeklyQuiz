@@ -68,7 +68,7 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
             }
               const mondayClosure1 = mondayClosure();
               const thisMonday = mondayClosure1.getMonday().toLocaleDateString().replaceAll('/', '');
-              if (snapshot.data()[thisMonday] == null) {
+              if (snapshot.data()[thisMonday] == -1) {
                 updateDoc(docRef, {[thisMonday]: score().getScore()});
               }
             });
@@ -126,8 +126,26 @@ const Quiz = ({ questions, handlePlayStateChange}) => {
                     <h1>Call yourself a Swiftie?</h1>
                     <button className='start-quiz' onClick={() => 
                         {
-                            setShowStart(false);
-                            handlePlayStateChange(true);
+                            const docRef = doc(db, 'users', authUser.email);
+                            const mondayClosure1 = mondayClosure();
+                            const thisMonday = mondayClosure1.getMonday().toLocaleDateString().replaceAll('/', '');
+                            const docSnap = getDoc(docRef).then((snapshot) => {
+                                if (snapshot.data()["hasStarted" + thisMonday] && snapshot.data()[thisMonday] == -1) {
+                                    updateDoc(docRef, {[thisMonday]: 0});
+                                    setShowStart(false);
+                                    handlePlayStateChange(true, true);
+                                }
+                                else if (!snapshot.data()["hasStarted" + thisMonday]){
+                                    updateDoc(docRef, {["hasStarted" + thisMonday]: true});
+                                    updateDoc(docRef, {[thisMonday]: -1});
+                                    setShowStart(false);
+                                    handlePlayStateChange(true, false);
+                                }
+                                else {
+                                    setShowStart(false);
+                                    handlePlayStateChange(true, true);
+                                }
+                            })
                         }}>Click to play!</button>
                 </div>) :
                 !showResult ? (<>

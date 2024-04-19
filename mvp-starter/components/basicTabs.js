@@ -53,8 +53,11 @@ export default function BasicTabs() {
     }
   };
 
-  const handlePlayStateChange = (state) => {
-    if (state) {
+  const handlePlayStateChange = (state, playedAlready = false) => {
+    if (playedAlready) {
+      alert("According to our data, you have already attempted this weeks quiz so this will not be counted towards your weekly score. Good luck!");
+    }
+    else if (state) {
       alert("Only your first attempt will count towards the leaderboard. Good luck!");
     }
     setIsPlaying(state);
