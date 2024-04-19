@@ -173,7 +173,6 @@ $foreground: #2d264b;
       color: $bg;
       outline: none;
       border: none;
-      left: 15%;
       cursor: pointer;
   }
         .result {
@@ -203,33 +202,25 @@ $foreground: #2d264b;
 }
 
 .start-quiz-container {
-
-    height: 8vh;
-
+    display: grid;
     h1 {
         text-align: center;
     }
 
     .start-quiz {
-        position: absolute;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
+        align-items: center;
     }
 
 }
 
 .start-quiz-container-no-auth {
-  height: 8vh;
+  display: grid;
   h1 {
       text-align: center;
   }
 
   .buttonLogin {
-      position: absolute;
-      left: 50%;
-      top: 65%;
-      transform: translate(-50%, -50%);
+    align-items: center;
   }
 
 }
