@@ -75,13 +75,17 @@
          }
        }
      },
+     MuiContainer: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          }
+        }
+    },
      MuiTypography: {
        styleOverrides: {
          root: {
            fontFamily: fontDefault
-         },
-         div: {
-           display: "flex"
          },
          h1: {
            color: fontColor,
