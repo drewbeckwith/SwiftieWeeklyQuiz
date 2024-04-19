@@ -291,6 +291,7 @@ $foreground: #2d264b;
   justify-content: space-between;
   padding: 1.5rem 1.5rem;
   display: ruby;
+  text-align: center;
 }
 
 
@@ -301,7 +302,7 @@ $foreground: #2d264b;
   color: #141a39;
   text-transform: uppercase;
   cursor: default;
-  margin-left: 10%;
+  width: 100%;
   height: .1rem;
 }
 
@@ -309,6 +310,10 @@ $foreground: #2d264b;
 #leaderboard {
   width: 100%;
   position: relative;
+}
+
+.leaderboard {
+  width: 100%;
 }
 
 table {
